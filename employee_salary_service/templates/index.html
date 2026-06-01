@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Employee Salary Service</title>
+
+    <style>
+
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body{
+
+            font-family: Arial, sans-serif;
+
+            height: 100vh;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            background: linear-gradient(
+                135deg,
+                #667eea,
+                #764ba2
+            );
+        }
+
+        .container{
+
+            background: white;
+
+            width: 420px;
+
+            padding: 35px;
+
+            border-radius: 18px;
+
+            box-shadow: 0px 8px 25px rgba(0,0,0,0.2);
+
+            animation: fadeIn 0.7s ease;
+        }
+
+        @keyframes fadeIn{
+
+            from{
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to{
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1{
+
+            text-align: center;
+
+            margin-bottom: 25px;
+
+            color: #333;
+        }
+
+        .input-group{
+
+            margin-bottom: 18px;
+        }
+
+        label{
+
+            display: block;
+
+            margin-bottom: 6px;
+
+            font-weight: bold;
+
+            color: #444;
+        }
+
+        input{
+
+            width: 100%;
+
+            padding: 12px;
+
+            border: 1px solid #ccc;
+
+            border-radius: 10px;
+
+            font-size: 15px;
+
+            transition: 0.3s;
+        }
+
+        input:focus{
+
+            border-color: #667eea;
+
+            outline: none;
+
+            box-shadow: 0px 0px 8px rgba(102,126,234,0.4);
+        }
+
+        button{
+
+            width: 100%;
+
+            padding: 13px;
+
+            border: none;
+
+            border-radius: 10px;
+
+            background: #667eea;
+
+            color: white;
+
+            font-size: 16px;
+
+            cursor: pointer;
+
+            transition: 0.3s;
+        }
+
+        button:hover{
+
+            background: #5a67d8;
+
+            transform: scale(1.02);
+        }
+
+        .result{
+
+            margin-top: 25px;
+
+            background: #f4f7ff;
+
+            border-left: 5px solid #667eea;
+
+            padding: 20px;
+
+            border-radius: 12px;
+        }
+
+        .result h2{
+
+            margin-bottom: 15px;
+
+            color: #333;
+        }
+
+        .result p{
+
+            margin: 10px 0;
+
+            color: #444;
+
+            font-size: 15px;
+        }
+
+        .highlight{
+
+            color: #667eea;
+
+            font-weight: bold;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>Employee Salary Calculator</h1>
+
+        <form
+            action="/calculate"
+            method="POST"
+            onsubmit="return validateForm()"
+        >
+
+            <div class="input-group">
+
+                <label>Employee Name</label>
+
+                <input
+                    type="text"
+                    name="name"
+                    id="name"
+                    placeholder="Enter employee name"
+                    required
+                >
+
+            </div>
+
+            <div class="input-group">
+
+                <label>Base Salary</label>
+
+                <input
+                    type="number"
+                    name="base_salary"
+                    id="base_salary"
+                    placeholder="Enter base salary"
+                    required
+                >
+
+            </div>
+
+            <div class="input-group">
+
+                <label>Hours Worked</label>
+
+                <input
+                    type="number"
+                    name="hours_worked"
+                    id="hours_worked"
+                    placeholder="Enter hours worked"
+                    required
+                >
+
+            </div>
+
+            <button type="submit">
+                Calculate Salary
+            </button>
+
+        </form>
+
+        {% if total_salary %}
+
+        <div class="result">
+
+            <h2>Salary Details</h2>
+
+            <p>
+                Employee Name:
+                <span class="highlight">
+                    {{ name }}
+                </span>
+            </p>
+
+            <p>
+                Base Salary:
+                <span class="highlight">
+                    ₹ {{ base_salary }}
+                </span>
+            </p>
+
+            <p>
+                Hours Worked:
+                <span class="highlight">
+                    {{ hours_worked }}
+                </span>
+            </p>
+
+            <p>
+                Bonus:
+                <span class="highlight">
+                    ₹ {{ bonus }}
+                </span>
+            </p>
+
+            <p>
+                Overtime Pay:
+                <span class="highlight">
+                    ₹ {{ overtime_pay }}
+                </span>
+            </p>
+
+            <p>
+                Total Salary:
+                <span class="highlight">
+                    ₹ {{ total_salary }}
+                </span>
+            </p>
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+    <script>
+
+        function validateForm(){
+
+            let salary =
+                document.getElementById(
+                    "base_salary"
+                ).value;
+
+            let hours =
+                document.getElementById(
+                    "hours_worked"
+                ).value;
+
+            if(salary <= 0){
+
+                alert(
+                    "Salary must be greater than 0"
+                );
+
+                return false;
+            }
+
+            if(hours <= 0){
+
+                alert(
+                    "Hours worked must be greater than 0"
+                );
+
+                return false;
+            }
+
+            return true;
+        }
+
+    </script>
+
+</body>
+
+</html>
